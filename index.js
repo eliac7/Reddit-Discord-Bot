@@ -7,6 +7,7 @@ const client = new Discord.Client({
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  client.user.setActivity("!reddithelp", { type: "LISTENING" });
 });
 
 const sendReplies = async (message, args, data) => {
@@ -51,16 +52,30 @@ client.on("messageCreate", async (message) => {
     let command = message.content.substring(1).split(" ")[0];
     let args = message.content.substring(2 + command.length);
 
-    try {
-      const res = await axios.get(
-        `https://meme-api.herokuapp.com/gimme/${command}/` +
-          (args ? parseInt(args) : "")
-      );
-
-      sendReplies(message, args, res.data);
-    } catch (err) {
-      message.reply(err.response.data.message);
+    if (command == "reddithelp") {
+      const help_embed = new Discord.MessageEmbed()
+        .setColor("#ff4500")
+        .setTitle("Reddit-Bot Commands")
+        .addFields({
+          name: "Πως δουλεύει;",
+          value:
+            "Χρησιμοποιούμε την εντολή !(θαυμαστικό) + όνομα ενός subreddit. Π.χ.: Για να πάρουμε φωτογραφίες από το subreddit του /r/greece, πληκτρολογούμε !greece. Αν θέλουμε να πάρουμε περισσότερες από μια φωτογραφίες, χρησιμοποιούμε !greece 2 (ένα νούμερο από το 2-50). ",
+        })
+        .setFooter("Made by eliac7#5541");
+      message.reply({ embeds: [help_embed] });
       return;
+    } else {
+      try {
+        const res = await axios.get(
+          `https://meme-api.herokuapp.com/gimme/${command}/` +
+            (args ? parseInt(args) : "")
+        );
+
+        sendReplies(message, args, res.data);
+      } catch (err) {
+        message.reply(err.response.data.message);
+        return;
+      }
     }
   }
 });
