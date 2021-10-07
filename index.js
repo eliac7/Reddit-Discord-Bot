@@ -7,7 +7,7 @@ const client = new Discord.Client({
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity("!reddithelp", { type: "LISTENING" });
+  client.user.setActivity("?reddithelp", { type: "PLAYING" });
 });
 
 const sendReplies = async (message, args, data) => {
@@ -48,10 +48,9 @@ const sendReplies = async (message, args, data) => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  if (message.content.startsWith("!")) {
+  if (message.content.startsWith("?")) {
     let command = message.content.substring(1).split(" ")[0];
     let args = message.content.substring(2 + command.length);
-
     if (command == "reddithelp") {
       const help_embed = new Discord.MessageEmbed()
         .setColor("#ff4500")
@@ -59,7 +58,7 @@ client.on("messageCreate", async (message) => {
         .addFields({
           name: "Πως δουλεύει;",
           value:
-            "Χρησιμοποιούμε την εντολή !(θαυμαστικό) + όνομα ενός subreddit. Π.χ.: Για να πάρουμε φωτογραφίες από το subreddit του /r/greece, πληκτρολογούμε !greece. Αν θέλουμε να πάρουμε περισσότερες από μια φωτογραφίες, χρησιμοποιούμε !greece 2 (ένα νούμερο από το 2-50). ",
+            "Χρησιμοποιούμε την εντολή ?(ερωτηματικό) + όνομα ενός subreddit. Π.χ.: Για να πάρουμε φωτογραφίες από το subreddit του /r/greece, πληκτρολογούμε ?greece. Αν θέλουμε να πάρουμε περισσότερες από μια φωτογραφίες, χρησιμοποιούμε ?greece 2 (ένα νούμερο από το 2-50). ",
         })
         .setFooter("Made by eliac7#5541");
       message.reply({ embeds: [help_embed] });
