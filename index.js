@@ -47,7 +47,7 @@ const sendReplies = async (message, args, data) => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  if (message.content.startsWith("!")) {
+  if (message.content.startsWith("?")) {
     let command = message.content.substring(1).split(" ")[0];
     let args = message.content.substring(2 + command.length);
     if (command == "reddithelp") {
