@@ -16,17 +16,26 @@ const sendReplies = async (message, args, data) => {
 
     if (nsfw) {
       if (!message.channel.nsfw) {
-        message.channel.send(
-          "This command can only be used in channels marked nsfw."
-        );
+        message.reply("This command can only be used in channels marked nsfw.");
         return;
       }
     }
 
     Object.keys(data.memes).forEach(function (key) {
-      let url = data.memes[key]["url"];
+      let postLink = data.memes[key]["postLink"];
+      let postTitle = data.memes[key]["title"];
+      let postAuthor = data.memes[key]["author"];
+      let postImageURL = data.memes[key]["url"];
 
-      message.reply(url);
+      const help_embed = new Discord.MessageEmbed()
+        .setColor("#149EF0")
+        .setTitle(postTitle)
+        .setURL(postLink)
+        .setImage(postImageURL)
+        .setAuthor(postAuthor)
+        .setTimestamp()
+        .setFooter("Made by eliac7#5541");
+      message.reply({ embeds: [help_embed] });
       return;
     });
   } else {
@@ -34,13 +43,24 @@ const sendReplies = async (message, args, data) => {
 
     if (nsfw) {
       if (!message.channel.nsfw) {
-        message.channel.send(
-          "This command can only be used in channels marked nsfw."
-        );
+        message.reply("This command can only be used in channels marked nsfw.");
         return;
       }
     }
-    message.reply(data.url);
+    let postImageURL = data.url;
+    let postLink = data.postLink;
+    let postTitle = data.title;
+    let postAuthor = data.author;
+
+    const help_embed = new Discord.MessageEmbed()
+      .setColor("#149EF0")
+      .setTitle(postTitle)
+      .setURL(postLink)
+      .setImage(postImageURL)
+      .setAuthor(postAuthor)
+      .setTimestamp()
+      .setFooter("Made by eliac7#5541");
+    message.reply({ embeds: [help_embed] });
     return;
   }
 };
@@ -56,9 +76,9 @@ client.on("messageCreate", async (message) => {
         .setColor("#ff4500")
         .setTitle("Reddit-Bot Commands")
         .addFields({
-          name: "Πως δουλεύει;",
+          name: "How it works?",
           value:
-            "Χρησιμοποιούμε την εντολή ?(ερωτηματικό) + όνομα ενός subreddit. Π.χ.: Για να πάρουμε φωτογραφίες από το subreddit του /r/greece, πληκτρολογούμε ?greece. Αν θέλουμε να πάρουμε περισσότερες από μια φωτογραφίες, χρησιμοποιούμε ?greece 2 (ένα νούμερο από το 2-50). ",
+            ' We use the prefix "?" to trigger our bot. With the command "?subreddit" we get one picture from this subreddit, eg: ?wallpapers. If we need more than one image, we can type "?subreddit X", where X is a number between 2 and 50',
         })
         .setFooter("Made by eliac7#5541");
       message.reply({ embeds: [help_embed] });
