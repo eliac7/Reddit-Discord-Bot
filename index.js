@@ -76,7 +76,7 @@ client.on("messageCreate", async (message) => {
         .setColor("#ff4500")
         .setTitle("Reddit-Bot Commands")
         .addFields({
-          name: "How it works?",
+          name: "How does it work?",
           value:
             ' We use the prefix "?" to trigger our bot. With the command "?subreddit" we get one picture from this subreddit, eg: ?wallpapers. If we need more than one image, we can type "?subreddit X", where X is a number between 2 and 50',
         })
