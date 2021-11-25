@@ -84,16 +84,18 @@ client.on("messageCreate", async (message) => {
       message.reply({ embeds: [help_embed] });
       return;
     } else {
-      try {
-        const res = await axios.get(
-          `https://meme-api.herokuapp.com/gimme/${command}/` +
-            (args ? parseInt(args) : "")
-        );
+      if (command && args) {
+        try {
+          const res = await axios.get(
+            `https://meme-api.herokuapp.com/gimme/${command}/` +
+              (args ? parseInt(args) : "")
+          );
 
-        sendReplies(message, args, res.data);
-      } catch (err) {
-        message.reply(err.response.data.message);
-        return;
+          sendReplies(message, args, res.data);
+        } catch (err) {
+          message.reply(err.response.data.message);
+          return;
+        }
       }
     }
   }
